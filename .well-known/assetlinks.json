@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.climby.app",
+    "sha256_cert_fingerprints": [
+      "34:81:8E:B0:29:B4:75:35:1A:3D:69:8A:7C:C4:9A:19:97:45:1B:11:3B:75:65:9E:9E:2B:7A:0B:C5:78:6B:9A"
+    ]
+  }
+}]

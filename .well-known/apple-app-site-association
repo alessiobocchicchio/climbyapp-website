@@ -1,0 +1,9 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [{
+      "appID": "4YD295767U.com.climby.app",
+      "paths": ["/m/*", "/u/*", "/r/*"]
+    }]
+  }
+}
