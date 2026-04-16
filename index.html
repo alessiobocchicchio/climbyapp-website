@@ -688,13 +688,43 @@
     }
 
     @media (max-width: 768px) {
-      /* iOS Safari scroll perf: background-attachment:fixed is known to cause
-         jank / white flashing during momentum scroll. Switch to scroll. */
-      body { background-attachment: scroll; }
+      /* Mobile background: rewrite gradients with viewport-relative units.
+         The original used % (which is body-box-relative). On a tall scrolling
+         page body-height is thousands of px, so % ellipses stretched into
+         ugly vertical gold bands. Using vw/vh keeps gradients viewport-
+         shaped — even, diffuse warmth instead of concentrated stripes.
+         background: shorthand also resets attachment to 'scroll' (iOS perf). */
+      body {
+        background:
+          radial-gradient(ellipse 110vw 55vh at 50% 0%,
+            rgba(232, 184, 40, 0.13) 0%,
+            rgba(232, 184, 40, 0.04) 45%,
+            transparent 78%),
+          radial-gradient(ellipse 90vw 45vh at 15% 35vh,
+            rgba(91, 155, 213, 0.07) 0%,
+            transparent 65%),
+          radial-gradient(ellipse 80vw 40vh at 90% 80vh,
+            rgba(200, 150, 30, 0.05) 0%,
+            transparent 60%),
+          linear-gradient(180deg, #08080F 0%, #050509 100%) !important;
+      }
 
-      /* iOS Safari bug: filter: drop-shadow breaks -webkit-background-clip:text
-         (gradient renders as flat blue). Disable the filter on mobile. */
-      .h1 { filter: none !important; }
+      /* Headline gradient — bulletproof on mobile. iOS Safari + Samsung
+         Internet both have edge cases where drop-shadow filter or inherited
+         color can kill the text-clip gradient. Re-assert every property. */
+      .h1 {
+        filter: none !important;
+        background: linear-gradient(100deg,
+          #7CB3E0 0%,
+          #5B9BD5 24%,
+          #C9B87A 54%,
+          #E8B828 82%,
+          #F4C73A 100%) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        color: transparent !important;
+      }
 
       /* Stack all 3 phones vertically, centered, no 3D transforms */
       .phones {
