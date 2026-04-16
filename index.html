@@ -697,28 +697,29 @@
       body {
         background:
           radial-gradient(ellipse 110vw 55vh at 50% 0%,
-            rgba(232, 184, 40, 0.13) 0%,
-            rgba(232, 184, 40, 0.04) 45%,
+            rgba(232, 184, 40, 0.18) 0%,
+            rgba(232, 184, 40, 0.06) 45%,
             transparent 78%),
           radial-gradient(ellipse 90vw 45vh at 15% 35vh,
-            rgba(91, 155, 213, 0.07) 0%,
+            rgba(91, 155, 213, 0.11) 0%,
             transparent 65%),
           radial-gradient(ellipse 80vw 40vh at 90% 80vh,
-            rgba(200, 150, 30, 0.05) 0%,
+            rgba(200, 150, 30, 0.08) 0%,
             transparent 60%),
           linear-gradient(180deg, #08080F 0%, #050509 100%) !important;
       }
 
-      /* Headline gradient — bulletproof on mobile. iOS Safari + Samsung
-         Internet both have edge cases where drop-shadow filter or inherited
-         color can kill the text-clip gradient. Re-assert every property. */
+      /* Headline gradient — bulletproof on mobile + higher saturation for pop.
+         iOS Safari + Samsung Internet both have edge cases where drop-shadow
+         filter or inherited color can kill the text-clip gradient. Re-assert
+         every property, with a punchier blue→gold ramp. */
       .h1 {
         filter: none !important;
         background: linear-gradient(100deg,
-          #7CB3E0 0%,
-          #5B9BD5 24%,
-          #C9B87A 54%,
-          #E8B828 82%,
+          #5B9BD5 0%,
+          #3A8DD4 20%,
+          #D4A845 50%,
+          #E8B828 75%,
           #F4C73A 100%) !important;
         -webkit-background-clip: text !important;
         background-clip: text !important;
