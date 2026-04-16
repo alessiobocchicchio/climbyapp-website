@@ -692,10 +692,6 @@
          jank / white flashing during momentum scroll. Switch to scroll. */
       body { background-attachment: scroll; }
 
-      /* iOS Safari bug: filter: drop-shadow breaks -webkit-background-clip:text
-         (gradient renders as flat blue). Disable the filter on mobile. */
-      .h1 { filter: none !important; }
-
       /* Stack all 3 phones vertically, centered, no 3D transforms */
       .phones {
         flex-direction: column;
@@ -720,30 +716,14 @@
       .brand-icon { width: 76px; height: 76px; }
       .brand-wordmark { font-size: 1.85rem; }
       .hero { min-height: auto; }
-
-      /* Eyebrow: allow wrap + smaller to avoid clipping on narrow phones */
-      .eyebrow {
-        white-space: normal;
-        font-size: 8px;
-        padding: 0.4rem 0.75rem;
-        letter-spacing: 0.06em;
-        gap: 0.5rem;
-      }
-
-      /* CTAs: stack vertically, full width — fixes intrinsic-content overflow */
-      .ctas { flex-direction: column; width: 100%; gap: 12px; }
-      .btn { width: 100%; min-width: unset; flex: unset; justify-content: center; }
-
+      .eyebrow { font-size: 9px; padding: 0.4rem 0.75rem; letter-spacing: 0.12em; gap: 0.5rem; }
+      .ctas { width: 100%; }
+      .btn { flex: 1; justify-content: center; min-width: 130px; }
       .features { grid-template-columns: 1fr; }
       .feature-card { padding: 1.8rem; min-height: auto; }
       .phone-body { width: 220px; height: 456px; }
       .footer-top { flex-direction: column; align-items: flex-start; }
       .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
-    }
-
-    @media (max-width: 430px) {
-      /* Smaller phone bodies to cut down scroll length on iPhone SE/Mini */
-      .phone-body { width: 180px; height: 374px; }
     }
 
     @media (prefers-reduced-motion: reduce) {

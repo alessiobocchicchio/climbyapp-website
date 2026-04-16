@@ -34,7 +34,6 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { overflow-x: hidden; }
-    html { background: #07070C; } /* prevent white flash in overscroll bounce */
 
     body {
       font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
@@ -687,22 +686,99 @@
       .hero-right { width: 100%; }
     }
 
-    @media (max-width: 768px) {
-      /* iOS Safari scroll perf: background-attachment:fixed is known to cause
-         jank / white flashing during momentum scroll. Switch to scroll. */
-      body { background-attachment: scroll; }
+    /* ═══════════════════════════════════════════════
+       CAROUSEL DOTS + HINT — hidden on desktop
+       ═══════════════════════════════════════════════ */
+    .carousel-dots { display: none; }
+    .carousel-hint { display: none; }
 
-      /* iOS Safari bug: filter: drop-shadow breaks -webkit-background-clip:text
-         (gradient renders as flat blue). Disable the filter on mobile. */
+    @media (max-width: 768px) {
+      /* iOS Safari scroll perf: replace body's background-attachment:fixed
+         (known-bad on mobile) with a viewport-fixed pseudo-element. html
+         gets the base color so overscroll bounce never shows white. */
+      html { background: #07070C; }
+      body { background: none !important; background-attachment: scroll; }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 58% 42% at 50% 10%,
+            rgba(232, 184, 40, 0.22) 0%,
+            rgba(232, 184, 40, 0.09) 28%,
+            transparent 58%),
+          radial-gradient(ellipse 52% 62% at 82% 72%,
+            rgba(91, 155, 213, 0.14) 0%,
+            rgba(91, 155, 213, 0.05) 35%,
+            transparent 60%),
+          radial-gradient(ellipse 44% 42% at 10% 82%,
+            rgba(200, 150, 30, 0.10) 0%,
+            transparent 55%),
+          linear-gradient(180deg, #08080F 0%, #050509 100%);
+      }
+
+      /* Prevent any accidental horizontal overflow of the page itself */
+      html, body { overflow-x: hidden; }
+      .page { overflow-x: hidden; max-width: 100%; }
+
+      /* Fix gradient headline on iOS Safari — filter: drop-shadow conflicts
+         with -webkit-background-clip:text on mobile, making it render flat blue */
       .h1 { filter: none !important; }
 
-      /* Stack all 3 phones vertically, centered, no 3D transforms */
+      /* Hero-left must not exceed viewport; description must wrap */
+      .hero-left { max-width: 100%; width: 100%; }
+      .hero-sub {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+      }
+
+      /* Particle perf: halve the count on mobile */
+      .aura span:nth-child(even) { display: none; }
+
+      /* CTAs stack vertically, full width, 12px gap */
+      .ctas {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+      .btn {
+        width: 100%;
+        flex: 1 1 auto;
+        justify-content: center;
+        min-width: 0;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      /* Phone showcase → SINGLE phone at a time, swipeable */
       .phones {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: visible;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 0;
+        padding: 1.5rem 0 0;
+        margin: 0 -1.25rem;
+        align-items: flex-start;
+        perspective: none;
+      }
+      .phones::-webkit-scrollbar { display: none; }
+
+      .phone {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        scroll-snap-stop: always;
+        display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 2rem;
-        padding: 1.5rem 0 1rem;
-        perspective: none;
+        justify-content: flex-start;
+        padding: 0 1.25rem;
       }
       .phone-side.left,
       .phone-side.right,
@@ -710,40 +786,112 @@
         transform: none;
         margin: 0;
       }
-      .phone-body { width: 220px; height: 456px; }
       .phone-side .phone-label { color: var(--gold); }
+
+      /* Carousel pagination dots */
+      .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 0.75rem;
+      }
+      .carousel-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.22);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease, width 0.3s ease;
+      }
+      .carousel-dot.active {
+        background: var(--gold);
+        transform: scale(1.1);
+        box-shadow: 0 0 12px rgba(232, 184, 40, 0.55);
+      }
+
+      /* Swipe hint */
+      .carousel-hint {
+        display: block;
+        text-align: center;
+        font-size: 12px;
+        color: var(--gold);
+        opacity: 0.75;
+        margin-top: 0.9rem;
+        font-family: 'DM Sans', sans-serif;
+        letter-spacing: 0.03em;
+        transition: opacity 0.5s ease;
+      }
+      .carousel-hint.hidden { opacity: 0; }
     }
 
     @media (max-width: 680px) {
       .page { padding: 1rem 1.25rem 3rem; }
       .nav { padding-bottom: 2rem; }
-      .brand-icon { width: 76px; height: 76px; }
-      .brand-wordmark { font-size: 1.85rem; }
-      .hero { min-height: auto; }
 
-      /* Eyebrow: allow wrap + smaller to avoid clipping on narrow phones */
+      .brand-icon { width: 68px; height: 68px; }
+      .brand-wordmark { font-size: 1.55rem; letter-spacing: 0.1em; }
+
+      .hero { min-height: auto; padding: 1rem 0 2.5rem; gap: 2.5rem; }
+
       .eyebrow {
-        white-space: normal;
-        font-size: 8px;
-        padding: 0.4rem 0.75rem;
-        letter-spacing: 0.06em;
-        gap: 0.5rem;
+        font-size: 8.5px;
+        padding: 0.4rem 0.7rem;
+        letter-spacing: 0.08em;
+        gap: 0.45rem;
       }
 
-      /* CTAs: stack vertically, full width — fixes intrinsic-content overflow */
-      .ctas { flex-direction: column; width: 100%; gap: 12px; }
-      .btn { width: 100%; min-width: unset; flex: unset; justify-content: center; }
+      .hero-sub { font-size: 1rem; margin-bottom: 2.2rem; }
 
-      .features { grid-template-columns: 1fr; }
-      .feature-card { padding: 1.8rem; min-height: auto; }
-      .phone-body { width: 220px; height: 456px; }
-      .footer-top { flex-direction: column; align-items: flex-start; }
-      .footer-bottom { flex-direction: column; gap: 0.8rem; text-align: center; }
+      .ctas { width: 100%; gap: 0.6rem; }
+      .btn { flex: 1; justify-content: center; min-width: 0; padding: 0.95rem 1rem; font-size: 0.9rem; }
+
+      .social { gap: 0.7rem; }
+      .social-label { font-size: 0.8rem; }
+      .social-btn { width: 44px; height: 44px; }
+
+      .phone-body { width: 220px; height: 456px; border-radius: 36px; padding: 8px; }
+      .phone-screen { border-radius: 28px; }
+      .phone-island { width: 62px; height: 19px; top: 14px; }
+      .phones { gap: 16px; padding: 2rem 1.25rem 2.5rem; margin: 0 -1.25rem; }
+
+      .section-intro { margin: 1.5rem auto 2rem; }
+      .features { grid-template-columns: 1fr; gap: 0.9rem; }
+      .feature-card { padding: 1.75rem; min-height: auto; }
+      .feature-title { font-size: 1.35rem; }
+      .feature-desc { font-size: 0.95rem; }
+      .icon-pod { width: 64px; height: 64px; margin-bottom: 1.4rem; }
+      .icon-pod svg { width: 36px; height: 36px; }
+
+      .footer { margin-top: 4rem; padding: 2.5rem 0 1rem; }
+      .footer-top { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+      .footer-brand-icon { width: 48px; height: 48px; }
+      .footer-brand-wordmark { font-size: 1.1rem; }
+      .footer-links { gap: 1.25rem; }
+      .footer-bottom { flex-direction: column; gap: 0.6rem; text-align: center; }
     }
 
     @media (max-width: 430px) {
-      /* Smaller phone bodies to cut down scroll length on iPhone SE/Mini */
-      .phone-body { width: 180px; height: 374px; }
+      .brand-icon { width: 56px; height: 56px; }
+      .brand-wordmark { font-size: 1.35rem; }
+
+      .eyebrow { font-size: 7.8px; padding: 0.35rem 0.6rem; letter-spacing: 0.06em; }
+
+      .hero-sub { font-size: 0.95rem; }
+
+      .phone-body { width: 204px; height: 422px; border-radius: 32px; padding: 7px; }
+      .phone-screen { border-radius: 25px; }
+      .phone-island { width: 58px; height: 18px; top: 12px; }
+      .phones { gap: 14px; }
+      .phone-label { font-size: 0.75rem; letter-spacing: 0.16em; margin-top: 0.9rem; }
+
+      .feature-card { padding: 1.5rem; }
+      .feature-title { font-size: 1.25rem; }
+      .icon-pod { width: 58px; height: 58px; margin-bottom: 1.2rem; }
+      .icon-pod svg { width: 32px; height: 32px; }
+
+      .section-h2 { font-size: 1.7rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -943,6 +1091,14 @@
           </div>
 
         </div>
+
+        <div class="carousel-dots" role="tablist" aria-label="Phone showcase navigation">
+          <button class="carousel-dot" data-idx="0" aria-label="Show Profile"></button>
+          <button class="carousel-dot active" data-idx="1" aria-label="Show Mountains"></button>
+          <button class="carousel-dot" data-idx="2" aria-label="Show Leaderboards"></button>
+        </div>
+
+        <div class="carousel-hint" aria-hidden="true">Swipe to explore →</div>
       </aside>
     </section>
 
@@ -1147,6 +1303,64 @@
     </footer>
 
   </div>
+
+  <script>
+    (function () {
+      var carousel = document.querySelector('.phones');
+      if (!carousel) return;
+      var phones = Array.prototype.slice.call(carousel.querySelectorAll('.phone'));
+      var dots = Array.prototype.slice.call(document.querySelectorAll('.carousel-dot'));
+      var hint = document.querySelector('.carousel-hint');
+      if (!phones.length || !dots.length) return;
+
+      var mqMobile = window.matchMedia('(max-width: 768px)');
+
+      function setActive(idx) {
+        dots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+      }
+
+      // Highlight dots based on which phone is centered in the carousel
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+            setActive(phones.indexOf(entry.target));
+          }
+        });
+      }, { root: carousel, threshold: [0.6, 0.75, 0.9] });
+      phones.forEach(function (p) { io.observe(p); });
+
+      // Dot clicks scroll to corresponding phone
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () {
+          if (phones[i]) {
+            carousel.scrollTo({ left: phones[i].offsetLeft, behavior: 'smooth' });
+          }
+        });
+      });
+
+      // Default: center the Mountains phone on mobile first paint
+      function centerMountainsOnMobile() {
+        if (mqMobile.matches && phones[1]) {
+          carousel.scrollTo({ left: phones[1].offsetLeft, behavior: 'auto' });
+          setActive(1);
+        }
+      }
+      // Run after layout settles
+      if (document.readyState === 'complete') {
+        centerMountainsOnMobile();
+      } else {
+        window.addEventListener('load', centerMountainsOnMobile);
+      }
+
+      // Fade out the swipe hint after the first user scroll
+      var dismissed = false;
+      carousel.addEventListener('scroll', function () {
+        if (dismissed) return;
+        dismissed = true;
+        if (hint) hint.classList.add('hidden');
+      }, { passive: true });
+    })();
+  </script>
 
 </body>
 </html>
