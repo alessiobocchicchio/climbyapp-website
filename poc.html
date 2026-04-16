@@ -83,9 +83,10 @@
       border-radius: 50%;
       background: var(--c);
       box-shadow:
-        0 0 calc(var(--s) * 2.5) var(--c),
-        0 0 calc(var(--s) * 5) var(--c),
-        0 0 calc(var(--s) * 8) color-mix(in srgb, var(--c) 60%, transparent);
+        0 0 calc(var(--s) * 3) var(--c),
+        0 0 calc(var(--s) * 6.5) var(--c),
+        0 0 calc(var(--s) * 11) color-mix(in srgb, var(--c) 55%, transparent),
+        0 0 calc(var(--s) * 18) color-mix(in srgb, var(--c) 25%, transparent);
       opacity: 0;
       filter: blur(0.4px);
       animation: rise var(--d) linear infinite;
@@ -164,16 +165,16 @@
     }
 
     .brand-icon {
-      width: 82px;
-      height: 82px;
+      width: 104px;
+      height: 104px;
       object-fit: contain;
       display: block;
-      filter: drop-shadow(0 4px 22px rgba(232, 184, 40, 0.3));
+      filter: drop-shadow(0 4px 26px rgba(232, 184, 40, 0.35));
     }
 
     .brand-wordmark {
       font-family: 'Outfit', sans-serif;
-      font-size: 2.15rem;
+      font-size: 2.5rem;
       font-weight: 900;
       letter-spacing: 0.12em;
       color: var(--white);
@@ -318,7 +319,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 0;
+      gap: 18px;
       perspective: 1800px;
       padding: 2rem 0;
     }
@@ -328,9 +329,8 @@
       transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
-    .phone-side { transform: scale(0.82); }
-    .phone-side.left { transform: scale(0.82) rotateY(14deg); transform-origin: right center; margin-right: -34px; }
-    .phone-side.right { transform: scale(0.82) rotateY(-14deg); transform-origin: left center; margin-left: -34px; }
+    .phone-side.left { transform: scale(0.88) rotateY(10deg); transform-origin: right center; }
+    .phone-side.right { transform: scale(0.88) rotateY(-10deg); transform-origin: left center; }
     .phone-center { z-index: 3; transform: scale(1); }
 
     /* Premium iPhone-style frame */
@@ -382,16 +382,16 @@
       display: block;
     }
 
-    /* Dynamic island */
+    /* Dynamic island — iPhone 15/17 Pro proportions (31% of screen width, ~6px below screen top) */
     .phone-island {
       position: absolute;
-      top: 19px;
+      top: 15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 86px;
-      height: 24px;
+      width: 66px;
+      height: 20px;
       background: #000;
-      border-radius: 12px;
+      border-radius: 10px;
       z-index: 4;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
     }
@@ -597,8 +597,8 @@
     }
 
     .footer-brand-icon {
-      width: 52px;
-      height: 52px;
+      width: 68px;
+      height: 68px;
       object-fit: contain;
       display: block;
       opacity: 0.95;
@@ -606,7 +606,7 @@
 
     .footer-brand-wordmark {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.55rem;
       font-weight: 900;
       letter-spacing: 0.14em;
       color: var(--text-dim);
@@ -688,8 +688,8 @@
     @media (max-width: 680px) {
       .page { padding: 1rem 1.25rem 3rem; }
       .nav { padding-bottom: 2rem; }
-      .brand-icon { width: 64px; height: 64px; }
-      .brand-wordmark { font-size: 1.6rem; }
+      .brand-icon { width: 76px; height: 76px; }
+      .brand-wordmark { font-size: 1.85rem; }
       .hero { min-height: auto; }
       .eyebrow { font-size: 10px; padding: 0.4rem 0.8rem; letter-spacing: 0.16em; }
       .ctas { width: 100%; }
@@ -716,51 +716,86 @@
 
   <!-- ═══════════════════════════════════════════════
        AURA RISING PARTICLES
-       Gold-heavy with blue mixed in. Particles rise
-       from below, glow, and fade out at the top.
-       32 particles, continuous, staggered.
+       Devastating, dense: ~65 particles. Gold-heavy
+       with blue mixed in. 4-layer glow bloom for the
+       signature "aura rising" effect.
        ═══════════════════════════════════════════════ -->
   <div class="aura" aria-hidden="true">
-    <!-- Large gold "hero" particles -->
-    <span style="--x:12vw; --s:4px; --c:rgba(244,199,58,0.9); --drift:30px;  --d:26s; --delay:0s;    --o:0.9;"></span>
-    <span style="--x:28vw; --s:5px; --c:rgba(232,184,40,0.95);--drift:-40px; --d:30s; --delay:5s;   --o:0.95;"></span>
-    <span style="--x:48vw; --s:4px; --c:rgba(244,199,58,0.9); --drift:22px;  --d:24s; --delay:9s;   --o:0.85;"></span>
-    <span style="--x:66vw; --s:5px; --c:rgba(232,184,40,0.9); --drift:-30px; --d:28s; --delay:3s;   --o:0.9;"></span>
-    <span style="--x:84vw; --s:4px; --c:rgba(244,199,58,0.95);--drift:35px;  --d:25s; --delay:12s;  --o:0.9;"></span>
+    <!-- LARGE GOLD HEROES (12) — strongest bloom -->
+    <span style="--x:6vw;  --s:5px;   --c:rgba(244,199,58,0.95);--drift:32px;  --d:28s; --delay:0s;    --o:0.95;"></span>
+    <span style="--x:14vw; --s:4.5px; --c:rgba(232,184,40,0.92);--drift:-28px; --d:26s; --delay:4s;    --o:0.9;"></span>
+    <span style="--x:22vw; --s:5px;   --c:rgba(244,199,58,0.95);--drift:38px;  --d:30s; --delay:7s;    --o:0.95;"></span>
+    <span style="--x:30vw; --s:6px;   --c:rgba(232,184,40,0.95);--drift:-44px; --d:32s; --delay:2s;    --o:0.95;"></span>
+    <span style="--x:40vw; --s:4.5px; --c:rgba(244,199,58,0.9); --drift:26px;  --d:27s; --delay:11s;   --o:0.9;"></span>
+    <span style="--x:48vw; --s:5.5px; --c:rgba(232,184,40,0.95);--drift:-32px; --d:30s; --delay:6s;    --o:0.95;"></span>
+    <span style="--x:56vw; --s:5px;   --c:rgba(244,199,58,0.92);--drift:36px;  --d:28s; --delay:13s;   --o:0.9;"></span>
+    <span style="--x:64vw; --s:6px;   --c:rgba(232,184,40,0.95);--drift:-30px; --d:31s; --delay:9s;    --o:0.95;"></span>
+    <span style="--x:72vw; --s:4.5px; --c:rgba(244,199,58,0.9); --drift:24px;  --d:26s; --delay:16s;   --o:0.9;"></span>
+    <span style="--x:80vw; --s:5px;   --c:rgba(232,184,40,0.95);--drift:-34px; --d:29s; --delay:3s;    --o:0.95;"></span>
+    <span style="--x:88vw; --s:5.5px; --c:rgba(244,199,58,0.95);--drift:42px;  --d:30s; --delay:18s;   --o:0.95;"></span>
+    <span style="--x:96vw; --s:4.5px; --c:rgba(232,184,40,0.9); --drift:-22px; --d:27s; --delay:12s;   --o:0.9;"></span>
 
-    <!-- Medium gold particles -->
-    <span style="--x:5vw;  --s:3px; --c:rgba(232,184,40,0.85);--drift:18px;  --d:22s; --delay:2s;   --o:0.8;"></span>
-    <span style="--x:18vw; --s:3px; --c:rgba(244,199,58,0.85);--drift:-24px; --d:23s; --delay:8s;   --o:0.75;"></span>
-    <span style="--x:34vw; --s:2.5px;--c:rgba(232,184,40,0.9);--drift:28px;  --d:21s; --delay:14s;  --o:0.8;"></span>
-    <span style="--x:42vw; --s:3px; --c:rgba(244,199,58,0.85);--drift:-16px; --d:24s; --delay:1s;   --o:0.75;"></span>
-    <span style="--x:54vw; --s:3px; --c:rgba(232,184,40,0.85);--drift:32px;  --d:22s; --delay:11s;  --o:0.8;"></span>
-    <span style="--x:62vw; --s:2.5px;--c:rgba(244,199,58,0.9);--drift:-28px; --d:23s; --delay:6s;   --o:0.8;"></span>
-    <span style="--x:74vw; --s:3px; --c:rgba(232,184,40,0.85);--drift:20px;  --d:25s; --delay:17s;  --o:0.75;"></span>
-    <span style="--x:88vw; --s:3px; --c:rgba(244,199,58,0.85);--drift:-22px; --d:22s; --delay:7s;   --o:0.8;"></span>
-    <span style="--x:95vw; --s:2.5px;--c:rgba(232,184,40,0.85);--drift:24px; --d:24s; --delay:13s;  --o:0.75;"></span>
+    <!-- MEDIUM GOLD (20) -->
+    <span style="--x:3vw;  --s:3px;   --c:rgba(244,199,58,0.85);--drift:18px;  --d:22s; --delay:1s;    --o:0.8;"></span>
+    <span style="--x:10vw; --s:3.5px; --c:rgba(232,184,40,0.85);--drift:-22px; --d:24s; --delay:8s;    --o:0.8;"></span>
+    <span style="--x:18vw; --s:3px;   --c:rgba(244,199,58,0.85);--drift:26px;  --d:23s; --delay:14s;   --o:0.8;"></span>
+    <span style="--x:26vw; --s:3.5px; --c:rgba(232,184,40,0.85);--drift:-18px; --d:22s; --delay:5s;    --o:0.8;"></span>
+    <span style="--x:34vw; --s:3px;   --c:rgba(244,199,58,0.85);--drift:24px;  --d:24s; --delay:15s;   --o:0.8;"></span>
+    <span style="--x:42vw; --s:2.5px; --c:rgba(232,184,40,0.9); --drift:-20px; --d:21s; --delay:10s;   --o:0.8;"></span>
+    <span style="--x:46vw; --s:3px;   --c:rgba(244,199,58,0.85);--drift:22px;  --d:23s; --delay:19s;   --o:0.8;"></span>
+    <span style="--x:52vw; --s:3.5px; --c:rgba(232,184,40,0.85);--drift:-26px; --d:25s; --delay:4s;    --o:0.8;"></span>
+    <span style="--x:58vw; --s:3px;   --c:rgba(244,199,58,0.85);--drift:20px;  --d:22s; --delay:17s;   --o:0.8;"></span>
+    <span style="--x:62vw; --s:2.5px; --c:rgba(232,184,40,0.9); --drift:-16px; --d:21s; --delay:12s;   --o:0.75;"></span>
+    <span style="--x:68vw; --s:3px;   --c:rgba(244,199,58,0.85);--drift:28px;  --d:24s; --delay:0.5s;  --o:0.8;"></span>
+    <span style="--x:76vw; --s:3.5px; --c:rgba(232,184,40,0.85);--drift:-24px; --d:25s; --delay:20s;   --o:0.8;"></span>
+    <span style="--x:82vw; --s:3px;   --c:rgba(244,199,58,0.85);--drift:22px;  --d:22s; --delay:6s;    --o:0.8;"></span>
+    <span style="--x:90vw; --s:3px;   --c:rgba(232,184,40,0.85);--drift:-18px; --d:23s; --delay:14.5s; --o:0.8;"></span>
+    <span style="--x:94vw; --s:2.5px; --c:rgba(244,199,58,0.9); --drift:20px;  --d:21s; --delay:21s;   --o:0.8;"></span>
+    <span style="--x:20vw; --s:2.5px; --c:rgba(232,184,40,0.85);--drift:14px;  --d:20s; --delay:22s;   --o:0.75;"></span>
+    <span style="--x:38vw; --s:3px;   --c:rgba(244,199,58,0.85);--drift:-20px; --d:23s; --delay:11s;   --o:0.8;"></span>
+    <span style="--x:54vw; --s:2.5px; --c:rgba(232,184,40,0.9); --drift:16px;  --d:21s; --delay:2.5s;  --o:0.75;"></span>
+    <span style="--x:70vw; --s:3px;   --c:rgba(244,199,58,0.85);--drift:-14px; --d:22s; --delay:17.5s; --o:0.8;"></span>
+    <span style="--x:86vw; --s:2.5px; --c:rgba(232,184,40,0.9); --drift:18px;  --d:20s; --delay:8.5s;  --o:0.8;"></span>
 
-    <!-- Small gold particles -->
-    <span style="--x:8vw;  --s:2px; --c:rgba(244,199,58,0.7); --drift:14px;  --d:19s; --delay:4s;   --o:0.65;"></span>
-    <span style="--x:22vw; --s:1.5px;--c:rgba(232,184,40,0.7);--drift:-12px; --d:20s; --delay:10s;  --o:0.6;"></span>
-    <span style="--x:38vw; --s:2px; --c:rgba(244,199,58,0.7); --drift:18px;  --d:18s; --delay:16s;  --o:0.65;"></span>
-    <span style="--x:52vw; --s:1.5px;--c:rgba(232,184,40,0.7);--drift:-14px; --d:19s; --delay:0.5s; --o:0.6;"></span>
-    <span style="--x:70vw; --s:2px; --c:rgba(244,199,58,0.7); --drift:16px;  --d:20s; --delay:15s;  --o:0.65;"></span>
-    <span style="--x:80vw; --s:1.5px;--c:rgba(232,184,40,0.7);--drift:-18px; --d:18s; --delay:19s;  --o:0.6;"></span>
-    <span style="--x:92vw; --s:2px; --c:rgba(244,199,58,0.7); --drift:12px;  --d:21s; --delay:21s;  --o:0.65;"></span>
+    <!-- SMALL GOLD (14) -->
+    <span style="--x:2vw;  --s:2px;   --c:rgba(244,199,58,0.75);--drift:12px;  --d:18s; --delay:3s;    --o:0.65;"></span>
+    <span style="--x:8vw;  --s:1.5px; --c:rgba(232,184,40,0.75);--drift:-10px; --d:19s; --delay:9.5s;  --o:0.6;"></span>
+    <span style="--x:16vw; --s:2px;   --c:rgba(244,199,58,0.75);--drift:14px;  --d:17s; --delay:16s;   --o:0.65;"></span>
+    <span style="--x:24vw; --s:1.5px; --c:rgba(232,184,40,0.75);--drift:-12px; --d:18s; --delay:1.5s;  --o:0.6;"></span>
+    <span style="--x:32vw; --s:2px;   --c:rgba(244,199,58,0.75);--drift:16px;  --d:19s; --delay:13s;   --o:0.65;"></span>
+    <span style="--x:36vw; --s:1.5px; --c:rgba(232,184,40,0.75);--drift:-8px;  --d:17s; --delay:20.5s; --o:0.6;"></span>
+    <span style="--x:44vw; --s:2px;   --c:rgba(244,199,58,0.75);--drift:10px;  --d:18s; --delay:6.5s;  --o:0.65;"></span>
+    <span style="--x:50vw; --s:1.5px; --c:rgba(232,184,40,0.75);--drift:-14px; --d:19s; --delay:18s;   --o:0.6;"></span>
+    <span style="--x:60vw; --s:2px;   --c:rgba(244,199,58,0.75);--drift:12px;  --d:17s; --delay:4.5s;  --o:0.65;"></span>
+    <span style="--x:66vw; --s:1.5px; --c:rgba(232,184,40,0.75);--drift:-10px; --d:18s; --delay:11.5s; --o:0.6;"></span>
+    <span style="--x:74vw; --s:2px;   --c:rgba(244,199,58,0.75);--drift:14px;  --d:19s; --delay:19s;   --o:0.65;"></span>
+    <span style="--x:78vw; --s:1.5px; --c:rgba(232,184,40,0.75);--drift:-12px; --d:17s; --delay:7.5s;  --o:0.6;"></span>
+    <span style="--x:84vw; --s:2px;   --c:rgba(244,199,58,0.75);--drift:16px;  --d:18s; --delay:15.5s; --o:0.65;"></span>
+    <span style="--x:92vw; --s:1.5px; --c:rgba(232,184,40,0.75);--drift:-14px; --d:19s; --delay:2s;    --o:0.6;"></span>
 
-    <!-- Blue particles (rarer) -->
-    <span style="--x:14vw; --s:3px; --c:rgba(124,179,224,0.85);--drift:24px; --d:26s; --delay:3s;  --o:0.75;"></span>
-    <span style="--x:40vw; --s:2.5px;--c:rgba(91,155,213,0.85);--drift:-20px;--d:25s; --delay:11s; --o:0.7;"></span>
-    <span style="--x:58vw; --s:3px; --c:rgba(124,179,224,0.85);--drift:20px; --d:27s; --delay:18s; --o:0.75;"></span>
-    <span style="--x:76vw; --s:2.5px;--c:rgba(91,155,213,0.85);--drift:-26px;--d:26s; --delay:5s;  --o:0.7;"></span>
-    <span style="--x:26vw; --s:2px; --c:rgba(124,179,224,0.75);--drift:18px; --d:24s; --delay:20s; --o:0.65;"></span>
-    <span style="--x:68vw; --s:2px; --c:rgba(91,155,213,0.75); --drift:-14px;--d:23s; --delay:9s;  --o:0.65;"></span>
-    <span style="--x:46vw; --s:2px; --c:rgba(124,179,224,0.75);--drift:22px; --d:25s; --delay:14s; --o:0.7;"></span>
+    <!-- BLUE PARTICLES (12) — accent color -->
+    <span style="--x:5vw;  --s:3px;   --c:rgba(124,179,224,0.85);--drift:22px; --d:26s; --delay:5s;    --o:0.75;"></span>
+    <span style="--x:12vw; --s:2.5px; --c:rgba(91,155,213,0.85); --drift:-18px;--d:25s; --delay:12s;   --o:0.75;"></span>
+    <span style="--x:19vw; --s:3.5px; --c:rgba(124,179,224,0.9); --drift:26px; --d:28s; --delay:8s;    --o:0.8;"></span>
+    <span style="--x:28vw; --s:2.5px; --c:rgba(91,155,213,0.8);  --drift:-16px;--d:24s; --delay:19s;   --o:0.7;"></span>
+    <span style="--x:37vw; --s:3px;   --c:rgba(124,179,224,0.85);--drift:20px; --d:26s; --delay:3.5s;  --o:0.75;"></span>
+    <span style="--x:45vw; --s:3.5px; --c:rgba(91,155,213,0.9);  --drift:-24px;--d:27s; --delay:15s;   --o:0.8;"></span>
+    <span style="--x:53vw; --s:2.5px; --c:rgba(124,179,224,0.8); --drift:18px; --d:25s; --delay:10.5s; --o:0.7;"></span>
+    <span style="--x:61vw; --s:3px;   --c:rgba(91,155,213,0.85); --drift:-22px;--d:26s; --delay:0s;    --o:0.75;"></span>
+    <span style="--x:69vw; --s:3.5px; --c:rgba(124,179,224,0.9); --drift:24px; --d:28s; --delay:13.5s; --o:0.8;"></span>
+    <span style="--x:77vw; --s:2.5px; --c:rgba(91,155,213,0.8);  --drift:-14px;--d:25s; --delay:18.5s; --o:0.7;"></span>
+    <span style="--x:85vw; --s:3px;   --c:rgba(124,179,224,0.85);--drift:20px; --d:27s; --delay:6s;    --o:0.75;"></span>
+    <span style="--x:93vw; --s:3.5px; --c:rgba(91,155,213,0.9);  --drift:-26px;--d:28s; --delay:11s;   --o:0.8;"></span>
 
-    <!-- Extra gold micros for density -->
-    <span style="--x:30vw; --s:1.5px;--c:rgba(244,199,58,0.65);--drift:-10px;--d:17s; --delay:6s;  --o:0.55;"></span>
-    <span style="--x:72vw; --s:1.5px;--c:rgba(232,184,40,0.65);--drift:10px; --d:18s; --delay:13s; --o:0.55;"></span>
-    <span style="--x:16vw; --s:1.5px;--c:rgba(244,199,58,0.7); --drift:-8px; --d:19s; --delay:22s; --o:0.6;"></span>
+    <!-- MICRO DENSITY (8) — tiny, fast, fill gaps -->
+    <span style="--x:9vw;  --s:1px;   --c:rgba(244,199,58,0.6); --drift:-6px;  --d:15s; --delay:0.5s;  --o:0.5;"></span>
+    <span style="--x:25vw; --s:1px;   --c:rgba(232,184,40,0.6); --drift:8px;   --d:16s; --delay:7s;    --o:0.5;"></span>
+    <span style="--x:41vw; --s:1px;   --c:rgba(244,199,58,0.6); --drift:-8px;  --d:15s; --delay:14s;   --o:0.5;"></span>
+    <span style="--x:57vw; --s:1px;   --c:rgba(91,155,213,0.7); --drift:10px;  --d:16s; --delay:21s;   --o:0.55;"></span>
+    <span style="--x:65vw; --s:1px;   --c:rgba(244,199,58,0.6); --drift:-6px;  --d:15s; --delay:5s;    --o:0.5;"></span>
+    <span style="--x:73vw; --s:1px;   --c:rgba(124,179,224,0.7);--drift:8px;   --d:16s; --delay:17s;   --o:0.55;"></span>
+    <span style="--x:81vw; --s:1px;   --c:rgba(232,184,40,0.6); --drift:-10px; --d:15s; --delay:10s;   --o:0.5;"></span>
+    <span style="--x:89vw; --s:1px;   --c:rgba(244,199,58,0.6); --drift:6px;   --d:16s; --delay:2s;    --o:0.5;"></span>
   </div>
 
   <div class="grain" aria-hidden="true"></div>
@@ -773,7 +808,7 @@
          ═══════════════════════════════════════════════ -->
     <nav class="nav">
       <a href="/" class="brand">
-        <img src="logo.png" alt="Climby" class="brand-icon">
+        <img src="logo-clean.png" alt="Climby" class="brand-icon">
         <span class="brand-wordmark">Climby</span>
       </a>
     </nav>
@@ -826,19 +861,6 @@
             <div class="phone-body">
               <div class="phone-screen">
                 <video autoplay muted loop playsinline preload="auto">
-                  <source src="videos/mountains.mov" type="video/quicktime">
-                  <source src="videos/mountains.mp4" type="video/mp4">
-                </video>
-              </div>
-              <div class="phone-island"></div>
-            </div>
-            <div class="phone-label">Mountains</div>
-          </div>
-
-          <div class="phone phone-center">
-            <div class="phone-body">
-              <div class="phone-screen">
-                <video autoplay muted loop playsinline preload="auto">
                   <source src="videos/profile.mov" type="video/quicktime">
                   <source src="videos/profile.mp4" type="video/mp4">
                 </video>
@@ -846,6 +868,19 @@
               <div class="phone-island"></div>
             </div>
             <div class="phone-label">Profile</div>
+          </div>
+
+          <div class="phone phone-center">
+            <div class="phone-body">
+              <div class="phone-screen">
+                <video autoplay muted loop playsinline preload="auto">
+                  <source src="videos/mountains.mov" type="video/quicktime">
+                  <source src="videos/mountains.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="phone-island"></div>
+            </div>
+            <div class="phone-label">Mountains</div>
           </div>
 
           <div class="phone phone-side right">
@@ -1039,7 +1074,7 @@
     <footer class="footer">
       <div class="footer-top">
         <a href="/" class="footer-brand">
-          <img src="logo.png" alt="Climby" class="footer-brand-icon">
+          <img src="logo-clean.png" alt="Climby" class="footer-brand-icon">
           <span class="footer-brand-wordmark">Climby</span>
         </a>
 
